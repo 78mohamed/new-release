@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
            ref: ${{ github.event.inputs.branch }}
            fetch-depth: 0
@@ -40,6 +40,8 @@ jobs:
           hash=$(git rev-parse HEAD)
           #git log --pretty=format:"%H" ${{ steps.out-hash.outputs.release-hash }}..HEAD
           commit_hashes=$(git log --pretty=format:"%H" ${{ steps.out-hash.outputs.release-hash }}..HEAD)
+          array_length=${#commit_hashes[@]}
+          echo "The length of the array is: $array_length"
           for commit_hash in $commit_hashes
           do
               # Your code here, for example, print each commit hash
