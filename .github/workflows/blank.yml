@@ -38,6 +38,7 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           hash=$(git rev-parse HEAD)
-          echo $hash
-          git revert --no-edit ${{ steps.out-hash.outputs.release-hash }}
+          git log --pretty=format:"%H" ${{ steps.out-hash.outputs.release-hash }}..Head
+          #git revert --no-edit Head
+          #hash=$(git rev-parse HEAD)
           #git push
