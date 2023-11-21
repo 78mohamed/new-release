@@ -48,4 +48,4 @@ jobs:
               #git show $commit_hash
           done
 
-          #git push
+          git push
