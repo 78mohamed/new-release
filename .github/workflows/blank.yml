@@ -38,18 +38,15 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           hash=$(git rev-parse HEAD)
-          git log --pretty=format:"%H" ${{ steps.out-hash.outputs.release-hash }}..HEAD
-
-         commit_hashes=$(git log --pretty=format:"%H" <start-commit>..<end-commit>)
-
-         # Iterate over commit hashes using a for loop
-         for commit_hash in $commit_hashes
-         do
-             # Your code here, for example, print each commit hash
-             echo "Commit Hash: $commit_hash"
-
-             # Add any other actions you want to perform for each commit
-             # ...
-         done
+          #git log --pretty=format:"%H" ${{ steps.out-hash.outputs.release-hash }}..HEAD
+          commit_hashes=$(git log --pretty=format:"%H" ${{ steps.out-hash.outputs.release-hash }}..HEAD)
+          for commit_hash in $commit_hashes
+          do
+              # Your code here, for example, print each commit hash
+              echo "Commit Hash: $commit_hash"
+ 
+              # Add any other actions you want to perform for each commit
+              # ...
+          done
 
           #git push
