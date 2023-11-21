@@ -45,6 +45,7 @@ jobs:
               # Your code here, for example, print each commit hash
               echo "Commit Hash: $commit_hash"
               git revert --no-edit $commit_hash
+              git show $commit_hash
           done
 
           #git push
