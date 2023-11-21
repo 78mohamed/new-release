@@ -44,7 +44,7 @@ jobs:
           do
               # Your code here, for example, print each commit hash
               echo "Commit Hash: $commit_hash"
-              git revert-main-branch $commit_hash
+              git revert -m 1 $commit_hash
               #git show $commit_hash
           done
 
