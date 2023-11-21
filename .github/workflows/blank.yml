@@ -39,7 +39,7 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           hash=$(git rev-parse HEAD)
           #git log --pretty=format:"%H" ${{ steps.out-hash.outputs.release-hash }}..HEAD
-          while [ "$string1" != "$string2" ]
+          while [ "$hash" != "${{ steps.out-hash.outputs.release-hash }}" ]
           do
             git revert --no-edit Head
             hash=$(git rev-parse HEAD)
