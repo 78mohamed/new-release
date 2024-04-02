@@ -13,6 +13,18 @@ on:
         required: true
         default: 'Head'
 
+      version:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Type of new version (major / minor / patch)'
+        # Input has to be provided for the workflow to run
+        required: true
+        type: choice
+        options: 
+        - patch
+        - minor
+        - major
+
+
 jobs:
   revert_commit:
     runs-on: ubuntu-latest
