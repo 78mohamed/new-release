@@ -21,10 +21,24 @@ jobs:
 
     - name: Checkout branch
       uses: actions/checkout@v4
-  
-    - name: Checkout repository
+    
+    - name: Install MongoDB Shell
+      run: |
+        wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | sudo apt-key add -
+        echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+        sudo apt-get update
+        sudo apt-get install -y mongodb-mongosh
+
+    - name: Install GitHub CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gh  
+
+    - name: Get Repository Release Note
+      id: get_note
       env:
         GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
       run: |
         RELEASE_NOTES=$(gh release view --json body -q ".body")
-        echo $RELEASE_NOTES
+        echo "::set-output name=releasenote::$RELEASE_NOTES"
+
