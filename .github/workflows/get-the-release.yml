@@ -10,7 +10,7 @@ on:
 
 jobs:
   # This workflow contains a single job called "bump-version"
- bump-version:
+ send-release-note:
   runs-on: ubuntu-latest
   permissions:
       deployments: write
@@ -40,5 +40,23 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
       run: |
         RELEASE_NOTES=$(gh release view --json body -q ".body")
-        echo "::set-output name=releasenote::$RELEASE_NOTES"
+        echo "releasenote=$RELEASE_NOTES" >> "$GITHUB_OUTPUT"
 
+    - name: Modify MongoDB Collection
+      env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+        RELEASENOTE: ${{ steps.get_note.outputs.releasenote }}
+      run: |
+        mongosh $MONGO_URI --eval "
+          const db = db.getSiblingDB('customerSuccessDb'); // Replace with your database name
+          const collection = db.getCollection('releaseNotes'); // Replace with your collection name
+
+          // Delete all existing records
+          const deleteResult = collection.deleteMany({});
+          print('Deleted records:', deleteResult.deletedCount);
+
+          // Insert the new record using the RELEASENOTE environment variable
+          const newRecord = { releaseNote: process.env.RELEASENOTE };
+          const insertResult = collection.insertOne(newRecord);
+          print('Inserted record ID:', insertResult.insertedId);
+        "
