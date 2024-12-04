@@ -3,6 +3,9 @@ name: 1_New version and deploy
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
+  push:
+    tags:        
+      - '*'  
   workflow_dispatch:
 
 jobs:
