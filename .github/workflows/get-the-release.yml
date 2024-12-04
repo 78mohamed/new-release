@@ -1,0 +1,19 @@
+name: 1_New version and deploy
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+
+jobs:
+  # This workflow contains a single job called "bump-version"
+ bump-version:
+  runs-on: ubuntu-latest
+  permissions:
+      deployments: write
+      contents: write
+      statuses: write
+
+  steps:
+    - name: Checkout repository
+      run: RELEASE_NOTES=$(gh release view --json body -q ".body")
