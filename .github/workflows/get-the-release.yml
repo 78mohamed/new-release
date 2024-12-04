@@ -22,4 +22,6 @@ jobs:
     - name: Checkout repository
       env:
         GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
-      run: RELEASE_NOTES=$(gh release view --json body -q ".body")
+      run: |
+        RELEASE_NOTES=$(gh release view --json body -q ".body")
+        echo $RELEASE_NOTE
