@@ -24,4 +24,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
       run: |
         RELEASE_NOTES=$(gh release view --json body -q ".body")
-        echo $RELEASE_NOTE
+        echo $RELEASE_NOTES
