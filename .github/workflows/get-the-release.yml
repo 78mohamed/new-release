@@ -40,7 +40,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
       run: |
         RELEASE_NOTES=$(gh release view --json body -q ".body")
-        echo "releasenote=$RELEASE_NOTES" >> "$GITHUB_OUTPUT"
+        # Escape newlines and other special characters
+        SAFE_RELEASE_NOTES=$(echo "$RELEASE_NOTES" | jq -sRr @json)
+        echo "releasenote=$SAFE_RELEASE_NOTES" >> "$GITHUB_OUTPUT"
 
     - name: Modify MongoDB Collection
       env:
