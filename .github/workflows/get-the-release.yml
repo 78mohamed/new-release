@@ -41,7 +41,7 @@ jobs:
       run: |
         RELEASE_NOTES=$(gh release view --json body -q ".body")
         # Escape newlines and other special characters
-        SAFE_RELEASE_NOTES=$(echo "$RELEASE_NOTES" | sed ':a;N;$!ba;s/\n/||NEWLINE||/g')
+        SAFE_RELEASE_NOTES=$(echo "$RELEASE_NOTES" | sed ':a;N;$!ba;s/\n/\/n/g')
         echo "releasenote=$SAFE_RELEASE_NOTES" >> "$GITHUB_OUTPUT"
 
     - name: Modify MongoDB Collection
