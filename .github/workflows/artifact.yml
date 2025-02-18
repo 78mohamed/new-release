@@ -16,6 +16,7 @@ jobs:
         run: |
           RELEASE_TAG=$(gh release list --limit 1 --json tagName --jq '.[0].tagName' || echo "latest")
           echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
+          echo $RELEASE_TAG
         env:
           GH_TOKEN: ${{ secrets.MY_TOKEN }}
 
