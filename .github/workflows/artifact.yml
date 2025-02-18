@@ -1,0 +1,16 @@
+name: Build and Package
+
+on:
+  push:
+    branches:
+      - main  # Run only on pushes to the main branch
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get Latest Git Tag
+        run: echo "RELEASE_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
