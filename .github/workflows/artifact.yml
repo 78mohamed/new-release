@@ -3,7 +3,7 @@ name: Build and Package
 on:
   push:
     branches:
-      - main  # Run only on pushes to the main branch
+      - main  # Run only on pushes to main
 
 jobs:
   package:
@@ -12,5 +12,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Get Latest Git Tag
-        run: echo "RELEASE_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+      - name: Get Latest GitHub Release Tag
+        run: |
+          RELEASE_TAG=$(gh release list --limit 1 --json tagName --jq '.[0].tagName' || echo "latest")
+          echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
+        env:
+          GH_TOKEN: ${{ secrets.MY_TOKEN }}
+
+      # - name: Create Tarball
+      #   run: tar -cvf app-${{ env.RELEASE_TAG }}.tar app
